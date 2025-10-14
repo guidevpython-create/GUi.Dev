@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="assets/capa.jpg" type="image/jpg">
+  <title>GUi.Dev | Portfólio</title>
+  <style>
+    * { box-sizing: border-box; }
+    html,body { height:100%; }
+    html {
+      scroll-behavior:smooth;
+      scroll-padding-top:90px; /* ajuste conforme o tamanho do header */
+    }
+    body {
+      font-family:'Poppins',sans-serif;
+      background:url('assets/fundo.jpg') no-repeat center center fixed;
+      background-size:cover;
+      color:#fff;
+      margin:0;
+      padding:0;
+    }
+
+    header {
+      background-color:rgba(15,20,27,0.95);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 40px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.4);
+      position:fixed;      /* 🔹 fixa no topo da tela */
+      top:0;
+      left:0;
+      width:100%;          /* 🔹 ocupa toda a largura */
+      z-index:1000;        /* 🔹 garante que fica acima de tudo */
+    }
+
+    header h1{color:#3399ff;margin:0;font-size:1.6rem;}
+    nav a{margin-left:22px;text-decoration:none;color:#ccc;transition:color .25s;font-size:0.95rem;}
+    nav a:hover{color:#3399ff;}
+
+    .hero{
+      text-align:center;
+      padding:28px 20px;
+      background:rgba(11,14,19,0.72);
+      border-radius:12px;
+      max-width:1100px;
+      margin:76px auto 28px;
+      animation:fadeInDown .9s ease both;
+    }
+    .hero-logo{width:380px;max-width:80%;margin-bottom:-10px;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.6));}
+    .hero h2{font-size:1.9rem;margin:6px 0;color:#e6f3ff;}
+    .hero p{color:#cfcfcf;margin:0;font-size:1rem;}
+
+    .projects{
+      padding:44px 18px;
+      max-width:1200px;
+      margin:18px auto 40px;
+      background-color:rgba(15,20,27,0.9);
+      border-radius:12px;
+      animation:fadeIn .9s ease both;
+    }
+    .projects h3{color:#3399ff;font-size:1.6rem;text-align:center;margin:0 0 28px;}
+
+    .project-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:26px;
+      align-items:start;
+      justify-items:center;
+      padding:0 20px 18px;
+    }
+
+
+    .project{
+      background-color:rgba(18,24,32,0.92);
+      border-radius:12px;
+      padding:16px;
+      text-align:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45);
+      width:100%;
+      max-width:300px;
+      transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s;
+      transform-origin:center;
+      opacity:0;
+      transform:translateY(18px);
+      animation:cardEnter .8s ease forwards;
+    }
+    .project:hover{transform:translateY(-6px) scale(1.06);box-shadow:0 18px 40px rgba(51,153,255,0.12);}
+    .project img{
+      width:100%;height:auto;max-height:110px;object-fit:contain;
+      border-radius:8px;margin-bottom:12px;transition:transform .28s ease;cursor:pointer;
+    }
+    .project:hover img{transform:scale(1.03);}
+    .project h4{margin:6px 0 12px;font-size:1rem;color:#e7f6ff;}
+    .project button{
+      background-color:#3399ff;color:#fff;border:none;
+      padding:9px 16px;border-radius:8px;cursor:pointer;font-weight:600;
+      transition:box-shadow .18s,transform .12s,background-color .18s;
+    }
+    .project button:hover{background-color:#2c88e0;box-shadow:0 8px 20px rgba(51,153,255,0.12);transform:translateY(-2px);}
+
+    .info{display:none;margin-top:12px;text-align:left;font-size:0.95rem;color:#d0d7db;background:rgba(6,8,10,0.14);padding:12px;border-radius:8px;}
+    .demo-gallery{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center;}
+    .demo-gallery img{
+      width:calc(50% - 8px);height:64px;object-fit:contain;border-radius:6px;cursor:pointer;
+      transition:transform .16s ease;box-shadow:0 6px 14px rgba(0,0,0,0.45);
+    }
+    
+    .demo-gallery img:hover{transform:scale(1.06);}
+
+    .overlay{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,0.88);z-index:1000;padding:18px;
+    }
+    .overlay img{max-width:96%;max-height:92%;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.8);}
+
+    .contact{
+      background-color:rgba(15,20,27,0.9);
+      text-align:center;padding:38px 10px;border-radius:12px;
+      max-width:1100px;margin:30px auto;animation:fadeIn .9s ease both;
+    }
+    .contact h3{color:#3399ff;margin:0 0 10px;}
+    .contact a{display:inline-block;background:#3399ff;color:#fff;padding:10px 18px;border-radius:8px;margin:8px;text-decoration:none;}
+    .contact a:hover{background:#2c88e0;}
+
+    footer{text-align:center;padding:18px;color:#9aa3ad;font-size:0.9rem;background:rgba(11,14,19,0.95);border-top:1px solid #1a1f27;}
+
+    @keyframes fadeInDown{from{opacity:0;transform:translateY(-18px);}to{opacity:1;transform:none;}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes cardEnter{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+
+    @media(max-width:640px){
+      header{padding:14px 18px;}
+      .project img{max-height:88px;}
+      .demo-gallery img{width:calc(50% - 8px);height:56px;}
+    }
+
+    body {
+      zoom: 1.5; /* Aumente ou diminua: 1.2 = 120% de zoom */
+    }
+
+    .logo-header {
+      height: 50px;       /* ajuste o tamanho conforme necessário */
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    }
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="Logo GUi.Dev" class="logo-header">
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+
+  <section id="inicio" class="hero">
+    <img src="assets/logo.png" alt="Logo GUi.Dev" class="hero-logo">
+    <h2>Desenvolvimento de bots, automações e aplicações personalizadas.</h2>
+    <p>Crio soluções inteligentes e funcionais sob medida para sua comunidade ou empresa.</p>
+  </section>
+
+  <section id="projetos" class="projects">
+    <h3>Bots para Discord</h3>
+
+    <div class="project-grid">
+      <!-- Sistema de Cadastro -->
+      <div class="project">
+        <img src="assets/preview-cadastro.png" alt="Sistema de Cadastro" class="card-img">
+        <h4>Sistema de Cadastro</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Gerencie o registro de motoristas com praticidade e segurança. Automatize o processo e mantenha seus dados sempre atualizados.</p>
+          <div class="demo-gallery">
+            <img src="assets/cadastro1.png" alt="cadastro1" />
+            <img src="assets/cadastro2.png" alt="cadastro2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de Tacógrafo -->
+      <div class="project">
+        <img src="assets/preview-tacografo.png" alt="Sistema de Tacógrafo" class="card-img">
+        <h4>Sistema de Tacógrafo</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Acompanhe o desempenho e tempo de direção de cada motorista. Tudo organizado em relatórios claros e acessíveis.</p>
+          <div class="demo-gallery">
+            <img src="assets/tacografo1.png" alt="tacografo1" />
+            <img src="assets/tacografo2.png" alt="tacografo2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de NF-e -->
+      <div class="project">
+        <img src="assets/preview-nfe.png" alt="Sistema de NF-e" class="card-img">
+        <h4>Sistema de NF-e</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Emita e controle notas fiscais eletrônicas com rapidez e integração total a plataformas como: VTLog, Trucky, etc....</p>
+          <div class="demo-gallery">
+            <img src="assets/preview-nfe1.png" alt="nfe1" />
+            <img src="assets/preview-nfe2.png" alt="nfe2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de Banco -->
+      <div class="project">
+        <img src="assets/banco.png" alt="Sistema de Banco" class="card-img">
+        <h4>Sistema de Banco</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Gerencie contas, saldos e pagamentos de forma automática e segura. Tudo sincronizado com as entregas registradas.</p>
+          <div class="demo-gallery">
+            <img src="assets/banco1.png" alt="banco1" />
+            <img src="assets/banco2.png" alt="banco2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de Loja -->
+      <div class="project">
+        <img src="assets/loja.png" alt="Sistema de Loja" class="card-img">
+        <h4>Sistema de Loja</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Controle produtos, vendas e estoque com praticidade, mantendo sua operação sempre organizada.</p>
+          <div class="demo-gallery">
+            <img src="assets/loja1.png" alt="loja1" />
+            <img src="assets/loja2.png" alt="loja2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de Som -->
+      <div class="project">
+        <img src="assets/som.png" alt="Sistema de Som" class="card-img">
+        <h4>Sistema de Som</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Permite pesquisar, reproduzir e controlar faixas em tempo real.</p>
+          <div class="demo-gallery">
+            <img src="assets/som1.png" alt="som1" />
+            <img src="assets/som2.png" alt="som2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+      <!-- Sistema de Suporte -->
+      <div class="project">
+        <img src="assets/suporte.png" alt="Sistema de Suporte/Tickets" class="card-img">
+        <h4>Sistema de Suporte/Tickets</h4>
+        <button onclick="toggleInfo(this)">Mais Informações</button>
+        <div class="info">
+          <p>Centralize atendimentos e resoluções de problemas. Organize chamados e ofereça suporte rápido e eficiente aos clientes.</p>
+          <div class="demo-gallery">
+            <img src="assets/suporte1.png" alt="suporte1" />
+            <img src="assets/suporte2.png" alt="suporte2" />
+          </div>
+          <br>
+          <a href="https://youtu.be/SEUVIDEO" target="_blank"><button>Ver Vídeo Demonstrativo</button></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contato" class="contact">
+    <h3>Entre em Contato</h3>
+    <a href="https://discord.com/users/526240767015124992" target="_blank" rel="noopener">Me chame no Discord</a>
+    <a href="mailto:guilhermesantananj@gmail.com">Enviar E-mail</a>
+  </section>
+
+  <footer>
+    © 2025 GUi.Dev. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    function toggleInfo(button){
+      const info=button.nextElementSibling;
+      if(!info)return;
+      if(info.style.display===""||info.style.display==="none"){
+        info.style.display="block";
+        button.textContent="Ocultar Informações";
+        info.scrollIntoView({behavior:'smooth',block:'nearest'});
+      }else{
+        info.style.display="none";
+        button.textContent="Mais Informações";
+      }
+    }
+
+    function openImageOverlay(src){
+      if(document.querySelector('.overlay'))return;
+      const overlay=document.createElement('div');
+      overlay.className='overlay';
+      overlay.innerHTML=`<img src="${src}" alt="preview">`;
+      overlay.onclick=()=>overlay.remove();
+      document.body.appendChild(overlay);
+    }
+
+    document.addEventListener('click',e=>{
+      if(e.target.matches('.demo-gallery img, .card-img')){
+        openImageOverlay(e.target.src);
+      }
+    });
+
+    document.addEventListener('click',e=>{
+      if(e.target.matches('button')||e.target.closest('.project'))return;
+      document.querySelectorAll('.project .info').forEach(info=>{
+        if(info.style.display==='block'){
+          info.style.display='none';
+          const btn=info.previousElementSibling;
+          if(btn&&btn.tagName==='BUTTON')btn.textContent='Mais Informações';
+        }
+      });
+    },true);
+  </script>
+</body>
+</html>
