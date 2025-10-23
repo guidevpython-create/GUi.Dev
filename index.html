@@ -336,5 +336,32 @@
       });
     },true);
   </script>
+
+<script>
+  // Bloqueia clique direito
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Bloqueia teclas de inspeção
+  document.onkeydown = function(e) {
+    if (e.keyCode == 123) return false; // F12
+    if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
+    if (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0))) return false;
+  };
+
+  // Bloqueia seleção de texto
+  document.addEventListener('selectstart', e => e.preventDefault());
+
+  // Bloqueia arrastar elementos
+  document.addEventListener('dragstart', e => e.preventDefault());
+
+  // Aviso se tentarem abrir DevTools
+  setInterval(() => {
+    if (window.devtoolsOpen || (window.outerWidth - window.innerWidth > 160) || (window.outerHeight - window.innerHeight > 160)) {
+      alert("Inspeção desativada!");
+      window.location.href = "about:blank";
+    }
+  }, 500);
+</script>
+
 </body>
 </html>
