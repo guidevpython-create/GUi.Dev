@@ -1253,6 +1253,7 @@ body::before {
 
 .carousel-item {
   min-width: 380px;
+  width: 380px;
   height: 240px;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1299,6 +1300,7 @@ body::before {
 
   .carousel-item {
     min-width: 85%;
+    width: 85%;
     flex: 0 0 auto;
     scroll-snap-align: center;
   }

@@ -549,8 +549,23 @@
     <img class="lightbox-img" id="lightbox-img" src="" alt="">
   </div>
 
+  <script>
+    // Bloqueia clique direito
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
+    // Bloqueia teclas de inspeção
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) return false; // F12
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
+        if (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0))) return false;
+    };
+
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+  </script>
 
   <script src="script.js"></script>
+
+
 </body>
 </html>
