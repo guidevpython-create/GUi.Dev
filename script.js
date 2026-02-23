@@ -491,7 +491,7 @@ document.addEventListener("keydown", (e) => {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/gui.devpython@gmail.com", {
+      const response = await fetch("https://formsubmit.co/ajax/contato@guidevbot.com.br", {
         method: "POST",
         headers: { 'Accept': 'application/json' },
         body: formData
