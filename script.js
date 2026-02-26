@@ -408,6 +408,7 @@ document.addEventListener("keydown", (e) => {
   if (!form) return;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
   function showError(fieldId, message) {
     const field = document.getElementById(fieldId);
@@ -450,6 +451,18 @@ document.addEventListener("keydown", (e) => {
       clearError('email');
     }
 
+    // Phone
+    const phone = document.getElementById('phone').value.trim();
+    if (!phone) {
+      showError('phone', 'Por favor insira seu telefone.');
+      valid = false;
+    } else if (!phoneRegex.test(phone)) {
+      showError('phone', 'Por favor insira um telefone válido.');
+      valid = false;
+    } else {
+      clearError('phone');
+    }
+
     // Message
     const message = document.getElementById('message').value.trim();
     if (!message) {
@@ -466,7 +479,7 @@ document.addEventListener("keydown", (e) => {
   }
 
   // Live validation on blur
-  ['name', 'email', 'message'].forEach(id => {
+  ['name', 'email', 'phone', 'message'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', () => clearError(id));
